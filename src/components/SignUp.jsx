@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { registerUser } from "../api";
 
-const SignUp = ({ setToken }) => {
+const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
 
   return (
     <div>
@@ -26,6 +27,7 @@ const SignUp = ({ setToken }) => {
           onChange={(e) => {
             setUsername(e.target.value);
           }}
+          required
         />
         <input
           value={password}
@@ -34,14 +36,12 @@ const SignUp = ({ setToken }) => {
           onChange={(e) => {
             setPassword(e.target.value);
           }}
+          required
         />
-        <button
-        type='submit'
-        >Sign Up
-        </button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default SignUp
+export default SignUp;

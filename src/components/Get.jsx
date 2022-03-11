@@ -9,7 +9,6 @@ const Get = () => {
         "https://strangers-things.herokuapp.com/api/2202-ftb-et-web-ft/posts"
       );
       const data = await response.json();
-      console.log("checking: ", data);
       setPosts(data.data.posts);
     };
     fetchPosts();
