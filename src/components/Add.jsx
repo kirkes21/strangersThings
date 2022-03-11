@@ -38,3 +38,5 @@ const handleSubmit = async (event) => {
 }
 
 export default Add
+
+// Thunder Client extension

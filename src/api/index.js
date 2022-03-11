@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-const Login = () => {
+export const registerUser = async (username, password) => {
   fetch("https://strangers-things.herokuapp.com/api/COHORT-NAME/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+    //   "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({
       user: {
-        username: "superman27",
-        password: "krypt0n0rbust",
+        username,
+        password,
       },
     }),
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-    })
-    .catch(console.error);
-    
-  return;
-};
+  });
 
-export default Login;
+  const data = await response.json();
+  console.log(data);
+  return data;
+};

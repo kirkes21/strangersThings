@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Navbar, Add, Get, SignUp } from "./index";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 const Main = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(
-        "https://strangers-things.herokuapp.com/api/2202-ftb-et-web-ft/posts"
-      );
-      const data = await response.json();
-      console.log("checking: ", data);
-      setPosts(data.data.posts);
-    };
-    fetchPosts();
-  }, []);
-
   return (
-    <div>
-      <h1>Hello from main</h1>
-      {posts.map((post) => (
-        <div key={post._id}>
-          <h3>{post.title}</h3>
-          <div>{post.description}</div>
-        </div>
-      ))}
+    <div className="main_container">
+      
+      
+      <SignUp />
+      <Add />
+      <Get />
+      
+
+      {/* <Navbar />
+      <h1 className="main_title">Hello World!!!</h1>
+      <Switch>
+        <Route
+          path="/"
+          render={() => {
+            return; //component to render;
+          }}
+        />
+        <Route
+          path="/somethingGoeshere"
+          render={() => {
+            return; //component to render;
+          }}
+        />
+        <Redirect to="/" />
+      </Switch> */}
     </div>
   );
 };
