@@ -9,6 +9,9 @@ const Navbar = () => {
           <Link to={"/"} className="nav_item">
             Home
           </Link>
+          <Link to={"/add"} className="nav_item">
+            CreatePost
+          </Link>
           <Link to={"/login"} className="nav_item">
             Log In
           </Link>

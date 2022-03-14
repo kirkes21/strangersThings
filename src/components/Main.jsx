@@ -12,22 +12,24 @@ const Main = () => {
     <Router>
       <div className="main_container">
         <Navbar />
-        <Add />
-        <Get />
         <Switch>
-          <Route
-            path="/signup"
-            render={() => {
-              return <SignUp />;
-            }}
-          />
-          <Route
-            path="/somethingGoesHere"
-            render={() => {
-              return; //component to render;
-            }}
-          />
-          <Redirect to="/" />
+          <Route path="/signup">
+            <SignUp />
+          </Route>
+          <Route path="/add">
+            <Add />
+          </Route>
+          {/* <Route path="/login">
+            <Login />
+          </Route> */}
+          {/* <Route path="/logout">
+            <Get />
+          </Route> */}
+          <Route path="/">
+            <Get />
+            {/* <Edit />
+            <Delete /> */}
+          </Route>
         </Switch>
       </div>
     </Router>
