@@ -1,10 +1,32 @@
-import React from "react";
+import react from "react";
 import { useState } from "react";
-import { registerUser } from "../api";
 
-const SignUp = ({ setToken }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const loginUser = async () => {
+    await fetch(
+      "https://strangers-things.herokuapp.com/api/COHORT-NAME/users/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: {
+            username,
+            password,
+          },
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch(console.error);
+  };
 
   return (
     <div>
@@ -12,7 +34,7 @@ const SignUp = ({ setToken }) => {
         onSubmit={async (e) => {
           e.preventDefault();
 
-          const result = await registerUser(username, password);
+          const result = await loginUser(username, password);
 
           localStorage.setItem("token", result.data.token);
           setToken(result.data.token);
@@ -36,10 +58,10 @@ const SignUp = ({ setToken }) => {
           }}
           required
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;
