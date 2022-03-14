@@ -22,7 +22,7 @@ const Main = () => {
             <Add />
           </Route>
           <Route path="/login">
-            <Login />
+            <Login setToken={setToken} />
           </Route>
           <Route path="/logout">
             {localStorage.clear()}

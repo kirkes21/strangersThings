@@ -1,12 +1,13 @@
 import react from "react";
 import { useState } from "react";
 
-const Login = () => {
+
+const Login = ({setToken}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser = async () => {
-    await fetch(
+  const loginUser = async (username, password, ) => {
+    const response = await fetch(
       "https://strangers-things.herokuapp.com/api/COHORT-NAME/users/login",
       {
         method: "POST",
@@ -16,16 +17,22 @@ const Login = () => {
         body: JSON.stringify({
           user: {
             username,
-            password,
+            password
           },
         }),
       }
     )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.error);
+    const data = await response.json();
+    console.log(data)
+    localStorage.setItem("token", response.data.token);
+    setToken("token", response.data.token);
+    return data;
+      // .then((response) => response.json())
+      // .then((result) => {
+      //   console.log(result.data.token);
+      //   return result.data.token;
+      // })
+      // .catch(console.error);
   };
 
   return (
@@ -36,8 +43,10 @@ const Login = () => {
 
           const result = await loginUser(username, password);
 
+          console.log(result)
           localStorage.setItem("token", result.data.token);
-          setToken(result.data.token);
+          setToken("token", result.data.token);
+          
         }}
       >
         <input
