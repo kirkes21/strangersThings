@@ -25,7 +25,7 @@ const Main = () => {
             <Login setToken={setToken} token={token} />
           </Route>
           <Route path="/logout">
-            <Logout setToken={setToken} />
+            <Logout setToken={setToken} token={token} />
             <Get />
           </Route>
           <Route path="/">

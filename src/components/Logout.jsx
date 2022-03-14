@@ -1,14 +1,21 @@
 import React from "react";
 import { useState } from "react";
 
-const Logout = ({ setToken }) => {
-//   function logout() {
-//     setToken("")
-//     localStorage.clear()
-//   }
-//     return (
-//         logout()
-//   )
+const Logout = ({ token, setToken }) => {
+  //   function logout() {
+  //     setToken("")
+  //     localStorage.clear()
+  //   }
+  //     return (
+  //         logout()
+  //   )
+
+  localStorage.clear();
+  console.log("before clear token: ", token);
+  setToken("");
+  console.log("after clear token: ", token);
+
+  return null;
 };
 
 export default Logout;

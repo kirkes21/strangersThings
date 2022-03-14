@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ token }) => {
@@ -18,15 +18,15 @@ const Navbar = ({ token }) => {
                 Log Out
               </Link>
             </>
-            ) : (
+          ) : (
             <>
-            <Link to={"/login"} className="nav_item">
-              Log In
-            </Link>
-            <Link to={"/signup"} className="nav_item">
-              Sign Up
-            </Link>
-          </>
+              <Link to={"/login"} className="nav_item">
+                Log In
+              </Link>
+              <Link to={"/signup"} className="nav_item">
+                Sign Up
+              </Link>
+            </>
           )}
         </div>
       </div>
