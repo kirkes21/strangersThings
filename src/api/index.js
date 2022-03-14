@@ -16,7 +16,6 @@ export const registerUser = async (username, password) => {
       }),
     }
   );
-
   const data = await response.json();
   return data;
 };

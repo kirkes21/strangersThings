@@ -1,8 +1,8 @@
-import react from "react";
+import React from "react";
 import { useState } from "react";
 import { loginUser } from "../api";
 
-const Login = () => {
+const Login = ({ setToken, token }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,8 +14,11 @@ const Login = () => {
 
           const result = await loginUser(username, password);
 
-          console.log(result);
+          // console.log(result.data.token);
           localStorage.setItem("token", result.data.token);
+          // console.log(localStorage)
+          setToken(result.data.token)
+          // console.log("token", token)
         }}
       >
         <input

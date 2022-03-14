@@ -1,7 +1,7 @@
 import react from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ token }) => {
   return (
     <div className="nav_bar_container">
       <div className="link_container">
@@ -9,18 +9,25 @@ const Navbar = () => {
           <Link to={"/"} className="nav_item">
             Home
           </Link>
-          <Link to={"/add"} className="nav_item">
-            CreatePost
-          </Link>
-          <Link to={"/login"} className="nav_item">
-            Log In
-          </Link>
-          <Link to={"/signup"} className="nav_item">
-            Sign Up
-          </Link>
-          <Link to={"/logout"} className="nav_item">
-            Log Out
-          </Link>
+          {token ? (
+            <>
+              <Link to={"/add"} className="nav_item">
+                CreatePost
+              </Link>
+              <Link to={"/logout"} className="nav_item">
+                Log Out
+              </Link>
+            </>
+            ) : (
+            <>
+            <Link to={"/login"} className="nav_item">
+              Log In
+            </Link>
+            <Link to={"/signup"} className="nav_item">
+              Sign Up
+            </Link>
+          </>
+          )}
         </div>
       </div>
     </div>

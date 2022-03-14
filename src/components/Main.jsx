@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, Add, Get, SignUp, Login } from "./index";
+import { Navbar, Add, Get, SignUp, Login, Logout } from "./index";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,19 +13,19 @@ const Main = () => {
   return (
     <Router>
       <div className="main_container">
-        <Navbar />
+        <Navbar token={token} />
         <Switch>
           <Route path="/signup">
-            <SignUp setToken={setToken} />
+            <SignUp setToken={setToken} token={token} />
           </Route>
           <Route path="/add">
             <Add />
           </Route>
           <Route path="/login">
-            <Login setToken={setToken} />
+            <Login setToken={setToken} token={token} />
           </Route>
           <Route path="/logout">
-            {localStorage.clear()}
+            <Logout setToken={setToken} />
             <Get />
           </Route>
           <Route path="/">

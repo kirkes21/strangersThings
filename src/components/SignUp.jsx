@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { registerUser } from "../api";
 
-const SignUp = () => {
+const SignUp = ({setToken, token}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,6 +15,9 @@ const SignUp = () => {
           const result = await registerUser(username, password);
 
           localStorage.setItem("token", result.data.token);
+          console.log(localStorage)
+          setToken(result.data.token)
+          console.log(token)
         }}
       >
         <input
