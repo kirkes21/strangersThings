@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
 
-const Logout = ({ token, setToken }) => {
+
+
+const Profile = ({ token, setToken, myMessages }) => {
+
+
   const handleLogOut = () => {
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
@@ -14,7 +18,15 @@ const Logout = ({ token, setToken }) => {
   };
 
   return (
-    <div>
+    <>
+      <div>
+        <div>Your Messages</div>
+        {(myMessages.length ? myMessages.map((myMessage, idx) => (
+          <div key={`message ${idx}`}>{myMessage}</div>
+        )): <div>No messages</div>)}
+      </div>
+      {/* ^^^Does it work?^^^ */}
+
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -23,8 +35,8 @@ const Logout = ({ token, setToken }) => {
       >
         <button type="submit">Log Out</button>
       </form>
-    </div>
+    </>
   );
 };
 
-export default Logout;
+export default Profile;

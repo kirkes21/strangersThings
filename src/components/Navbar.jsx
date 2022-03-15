@@ -14,8 +14,8 @@ const Navbar = ({ token }) => {
               <Link to={"/add"} className="nav_item">
                 CreatePost
               </Link>
-              <Link to={"/logout"} className="nav_item">
-                Log Out
+              <Link to={"/profile"} className="nav_item">
+                Profile
               </Link>
             </>
           ) : (

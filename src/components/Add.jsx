@@ -5,6 +5,7 @@ const Add = ({ token }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [location, setLocation] = useState("");
   const [willDeliver, setWillDeliver] = useState(false);
 
   const addPost = async () => {
@@ -19,12 +20,25 @@ const Add = ({ token }) => {
           title,
           description,
           price,
+          location,
           willDeliver,
         },
       }),
     });
     const data = await response.json();
     console.log(data);
+
+    setTitle("");
+    setDescription("");
+    setPrice("");
+    setLocation("");
+    setWillDeliver(false);
+
+    if (document.querySelector('#willDeliver:checked')) {
+      const checkBox = document.querySelector('#willDeliver')
+      checkBox.checked = false
+    }
+
     return data;
   };
 
@@ -55,6 +69,12 @@ const Add = ({ token }) => {
           placeholder="Price"
           value={price}
           onChange={(event) => setPrice(event.target.value)}
+        ></input>
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(event) => setLocation(event.target.value)}
         ></input>
         <input
           type="checkbox"

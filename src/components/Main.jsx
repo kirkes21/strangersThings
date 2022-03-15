@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Add, Get, SignUp, Login, Logout } from "./index";
+import { Navbar, Add, Get, SignUp, Login, Profile } from "./index";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { myUserInfo } from "../api";
 
 const Main = () => {
   const [token, setToken] = useState("");
+  const [myUserId, setMyUserId] = useState("");
+  const [myMessages, setMyMessages] = useState([])
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token");
@@ -17,6 +20,18 @@ const Main = () => {
       console.log("currentToken", token);
     }
   }, [token]);
+
+  useEffect(() => {
+    const getMyUserFunction = async() => {
+      if (token) {
+        const result = await myUserInfo(token)
+    console.log(result)
+    setMyUserId(result.data._id)
+    setMyMessages(result.data.messages)
+    }}
+    getMyUserFunction()
+
+  }, [token])
 
   return (
     <Router>
@@ -32,11 +47,11 @@ const Main = () => {
           <Route path="/login">
             <Login setToken={setToken} token={token} />
           </Route>
-          <Route path="/logout">
-            <Logout setToken={setToken} token={token} />
+          <Route path="/profile">
+            <Profile setToken={setToken} token={token} myMessages={myMessages}/>
           </Route>
           <Route path="/">
-            <Get token={token} />
+            <Get token={token} myUserId={myUserId} />
             {/* {token ? (
               <>
                 <Edit />
