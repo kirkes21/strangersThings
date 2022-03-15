@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Add, Get, SignUp, Login, Logout } from "./index";
 import {
   BrowserRouter as Router,
@@ -8,7 +8,15 @@ import {
 } from "react-router-dom";
 
 const Main = () => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+const localStorageToken = localStorage.getItem('token')
+if(localStorageToken) {
+  setToken(localStorageToken)
+  console.log('currentToken', token)
+}
+  }, [token])
 
   return (
     <Router>
@@ -19,14 +27,13 @@ const Main = () => {
             <SignUp setToken={setToken} token={token} />
           </Route>
           <Route path="/add">
-            <Add />
+            <Add token={token} />
           </Route>
           <Route path="/login">
             <Login setToken={setToken} token={token} />
           </Route>
           <Route path="/logout">
             <Logout setToken={setToken} token={token} />
-            <Get />
           </Route>
           <Route path="/">
             <Get />

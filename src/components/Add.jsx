@@ -1,59 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const Add = () => {
-  const [title, setTitle] = useState([]);
-  const [description, setDescription] = useState([]);
+const Add = ({ token }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [willDeliver, setWillDeliver] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    console.log(title, description);
-    await fetch(
+  const addPost = async () => {
+
+    const response = await fetch(
       "https://strangers-things.herokuapp.com/api/COHORT-NAME/posts",
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer TOKEN_STRING_HERE",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           post: {
-            title: "My favorite stuffed animal",
-            description:
-              "This is a pooh doll from 1973. It has been carefully taken care of since I first got it.",
-            price: "$480.00",
-            willDeliver: true,
+            title,
+            description,
+            price,
+            willDeliver,
           },
         }),
       }
     )
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.error);
+    const data = await response.json();
+    console.log(data)
   };
 
   return (
     <>
       <h3>New Post</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={async (event) => {
+        event.preventDefault();
+      const result = await addPost()
+      console.log(result)
+      }}
+      >
         <input
           type="text"
-          placeholder="title"
+          placeholder="Title"
           value={title}
-          onChange={(ev) => setTitle(event.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
         ></input>
         <input
           type="text"
-          placeholder="description"
+          placeholder="Description"
           value={description}
-          onChange={(ev) => setDescription(event.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
         ></input>
+        <input
+          type="text"
+          placeholder="Price"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)}
+        ></input>
+        <input
+          type="checkbox"
+          id="willDeliver"
+          value={willDeliver}
+          onChange={(event) => setWillDeliver(event.target.value)}
+        ></input>
+        <label htmlFor="willDeliver">Will Deliver</label>
+        <button type="submit">Post</button>
       </form>
     </>
   );
 };
 
 export default Add;
-
-// Thunder Client extension

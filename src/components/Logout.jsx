@@ -2,20 +2,30 @@ import React from "react";
 import { useState } from "react";
 
 const Logout = ({ token, setToken }) => {
-  //   function logout() {
-  //     setToken("")
-  //     localStorage.clear()
-  //   }
-  //     return (
-  //         logout()
-  //   )
+  const handleLogOut = () => {
 
-  localStorage.clear();
-  console.log("before clear token: ", token);
-  setToken("");
-  console.log("after clear token: ", token);
+    // console.log("before clear", localStorage);
+    // console.log("before clear", token)
 
-  return null;
+    setToken('');
+    localStorage.clear();
+
+    // console.log("after clear", token);
+    // console.log("after clear", localStorage);
+  };
+
+  return (
+    <div>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          handleLogOut();
+        }}
+      >
+          <button type="submit">Log Out</button>
+      </form>
+    </div>
+  );
 };
 
 export default Logout;
