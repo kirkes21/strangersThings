@@ -1,11 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-
-
 const Profile = ({ token, setToken, myMessages }) => {
-
-
   const handleLogOut = () => {
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
@@ -21,9 +17,13 @@ const Profile = ({ token, setToken, myMessages }) => {
     <>
       <div>
         <div>Your Messages</div>
-        {(myMessages.length ? myMessages.map((myMessage, idx) => (
-          <div key={`message ${idx}`}>{myMessage}</div>
-        )): <div>No messages</div>)}
+        {myMessages.length ? (
+          myMessages.map((myMessage, idx) => (
+            <div key={myMessage._id}>{myMessage}</div>
+          ))
+        ) : (
+          <div>No messages</div>
+        )}
       </div>
       {/* ^^^Does it work?^^^ */}
 

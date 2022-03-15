@@ -49,11 +49,11 @@ const Get = ({ token, myUserId }) => {
         },
       }),
     });
-    setContent('')
+    setContent("");
 
     const result = response.json();
     console.log(result);
-    // fetchPosts();
+    // return result;
   };
 
   return (
@@ -71,13 +71,13 @@ const Get = ({ token, myUserId }) => {
           {myUserId === post.author._id ? (
             <button onClick={() => deletePost(post._id)}>Delete</button>
           ) : (
-            <form 
-            key={post._id}
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const result = await addMessage(post._id, content)
-              console.log(result)
-            }}
+            <form
+              key={post._id}
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const result = await addMessage(post._id, content);
+                console.log(result);
+              }}
             >
               <input
                 placeholder="Your message here"
