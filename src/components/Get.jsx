@@ -53,6 +53,7 @@ const Get = ({ token, myUserId }) => {
 
     const result = response.json();
     console.log(result);
+    // fetchPosts();
   };
 
   return (
@@ -70,7 +71,14 @@ const Get = ({ token, myUserId }) => {
           {myUserId === post.author._id ? (
             <button onClick={() => deletePost(post._id)}>Delete</button>
           ) : (
-            <form key={post._id}>
+            <form 
+            key={post._id}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const result = await addMessage(post._id, content)
+              console.log(result)
+            }}
+            >
               <input
                 placeholder="Your message here"
                 value={content}
@@ -79,9 +87,7 @@ const Get = ({ token, myUserId }) => {
                 }}
                 required
               ></input>
-              <button onClick={() => addMessage(post._id, content)}>
-                Message
-              </button>
+              <button type="submit">Message</button>
             </form>
           )}
         </div>
