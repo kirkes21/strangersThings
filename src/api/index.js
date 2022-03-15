@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 
+export const baseURL = 'https://strangers-things.herokuapp.com/api/2202-ftb-et-web-ft'
+
 export const registerUser = async (username, password) => {
+
   const response = await fetch(
-    "https://strangers-things.herokuapp.com/api/COHORT-NAME/users/register",
+    `${baseURL}/users/register`,
     {
       method: "POST",
       headers: {
@@ -22,7 +25,7 @@ export const registerUser = async (username, password) => {
 
 export const loginUser = async (username, password) => {
   const response = await fetch(
-    "https://strangers-things.herokuapp.com/api/COHORT-NAME/users/login",
+    `${baseURL}/users/login`,
     {
       method: "POST",
       headers: {

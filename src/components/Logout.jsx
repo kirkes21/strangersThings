@@ -3,11 +3,10 @@ import { useState } from "react";
 
 const Logout = ({ token, setToken }) => {
   const handleLogOut = () => {
-
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
 
-    setToken('');
+    setToken("");
     localStorage.clear();
 
     // console.log("after clear", token);
@@ -22,7 +21,7 @@ const Logout = ({ token, setToken }) => {
           handleLogOut();
         }}
       >
-          <button type="submit">Log Out</button>
+        <button type="submit">Log Out</button>
       </form>
     </div>
   );

@@ -8,15 +8,15 @@ import {
 } from "react-router-dom";
 
 const Main = () => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
-const localStorageToken = localStorage.getItem('token')
-if(localStorageToken) {
-  setToken(localStorageToken)
-  console.log('currentToken', token)
-}
-  }, [token])
+    const localStorageToken = localStorage.getItem("token");
+    if (localStorageToken) {
+      setToken(localStorageToken);
+      console.log("currentToken", token);
+    }
+  }, [token]);
 
   return (
     <Router>
@@ -36,7 +36,7 @@ if(localStorageToken) {
             <Logout setToken={setToken} token={token} />
           </Route>
           <Route path="/">
-            <Get />
+            <Get token={token} />
             {/* {token ? (
               <>
                 <Edit />

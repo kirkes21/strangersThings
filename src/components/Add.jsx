@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { baseURL } from "../api";
 
 const Add = ({ token }) => {
   const [title, setTitle] = useState("");
@@ -7,37 +8,35 @@ const Add = ({ token }) => {
   const [willDeliver, setWillDeliver] = useState(false);
 
   const addPost = async () => {
-
-    const response = await fetch(
-      "https://strangers-things.herokuapp.com/api/COHORT-NAME/posts",
-      {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+    const response = await fetch(`${baseURL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        post: {
+          title,
+          description,
+          price,
+          willDeliver,
         },
-        body: JSON.stringify({
-          post: {
-            title,
-            description,
-            price,
-            willDeliver,
-          },
-        }),
-      }
-    )
+      }),
+    });
     const data = await response.json();
-    console.log(data)
+    console.log(data);
+    return data;
   };
 
   return (
     <>
       <h3>New Post</h3>
-      <form onSubmit={async (event) => {
-        event.preventDefault();
-      const result = await addPost()
-      console.log(result)
-      }}
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const result = await addPost();
+          console.log(result);
+        }}
       >
         <input
           type="text"
@@ -61,7 +60,7 @@ const Add = ({ token }) => {
           type="checkbox"
           id="willDeliver"
           value={willDeliver}
-          onChange={(event) => setWillDeliver(event.target.value)}
+          onChange={() => setWillDeliver(!willDeliver)}
         ></input>
         <label htmlFor="willDeliver">Will Deliver</label>
         <button type="submit">Post</button>
