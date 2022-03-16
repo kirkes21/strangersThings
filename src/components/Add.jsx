@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import { baseURL, addPost } from "../api";
 
 const Add = ({ token, posts, setPosts }) => {
-  const [formState, setFormState] = useState(
-    { title: "",
-      description: "",
-      price: "",
-      location: "",
-      willDeliver: false,
-    }
-  )
-  console.log("posts from inside add", posts)
-  const history = useHistory()
+  const [formState, setFormState] = useState({
+    title: "",
+    description: "",
+    price: "",
+    location: "",
+    willDeliver: false,
+  });
+  const history = useHistory();
   // const addPost = async () => {
   //   const response = await fetch(`${baseURL}/posts`, {
   //     method: "POST",
@@ -30,11 +28,8 @@ const Add = ({ token, posts, setPosts }) => {
   //       },
   //     }),
   //   });
-    // const data = await response.json();
-    // console.log(data);
-
-    
-
+  // const data = await response.json();
+  // console.log(data);
 
   return (
     <>
@@ -42,42 +37,55 @@ const Add = ({ token, posts, setPosts }) => {
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          const result = await addPost(formState);
-          setPosts([...posts, result])
-          history.push("/")
-          
+          const result = await addPost(token, formState);
+          setPosts([...posts, result]);
+          history.push("/");
+
           console.log(result);
         }}
       >
         <input
           type="text"
           placeholder="Title"
-          value={title}
-          onChange={(event) => setFormState({...formState, title: event.target.value})}
+          value={formState.title}
+          onChange={(event) =>
+            setFormState({ ...formState, title: event.target.value })
+          }
+          required
         ></input>
         <input
           type="text"
           placeholder="Description"
-          value={description}
-          onChange={(event) => setFormState({...formState, description: event.target.value})}
+          value={formState.description}
+          onChange={(event) =>
+            setFormState({ ...formState, description: event.target.value })
+          }
+          required
         ></input>
         <input
           type="text"
           placeholder="Price"
-          value={price}
-          onChange={(event) => setPrice(event.target.value)}
+          value={formState.price}
+          onChange={(event) =>
+            setFormState({ ...formState, price: event.target.value })
+          }
+          required
         ></input>
         <input
           type="text"
           placeholder="Location"
-          value={location}
-          onChange={(event) => setLocation(event.target.value)}
+          value={formState.location}
+          onChange={(event) =>
+            setFormState({ ...formState, location: event.target.value })
+          }
         ></input>
         <input
           type="checkbox"
           id="willDeliver"
-          value={willDeliver}
-          onChange={() => setWillDeliver(!willDeliver)}
+          value={formState.willDeliver}
+          onChange={() =>
+            setFormState({ ...formState, willDeliver: !willDeliver })
+          }
         ></input>
         <label htmlFor="willDeliver">Will Deliver</label>
         <button type="submit">Post</button>

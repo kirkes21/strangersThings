@@ -57,11 +57,11 @@ export const fetchPosts = async (token) => {
     },
   });
   const data = await response.json();
-  console.log(await data.data.posts)
+  console.log('fetchPosts: ', data.data.posts)
   return data.data.posts
 };
 
-export const addPost = async () => {
+export const addPost = async (token, formState) => {
   const response = await fetch(`${baseURL}/posts`, {
     method: "POST",
     headers: {
@@ -70,11 +70,11 @@ export const addPost = async () => {
     },
     body: JSON.stringify({
       post: {
-        title,
-        description,
-        price,
-        location,
-        willDeliver,
+        title: formState.title,
+        description: formState.description,
+        price: formState.price,
+        location: formState.location,
+        willDeliver: formState.willDeliver,
       },
     }),
   });

@@ -17,9 +17,9 @@ const Main = () => {
   useEffect(() => {
     const displayPosts = async () => {
       const newData = await fetchPosts(token);
-      setPosts(newData)
-    }
-    displayPosts()
+      setPosts(newData);
+    };
+    displayPosts();
   }, []);
 
   useEffect(() => {
@@ -65,7 +65,12 @@ const Main = () => {
             />
           </Route>
           <Route path="/">
-            <Get token={token} myUserId={myUserId} posts={posts} />
+            <Get
+              token={token}
+              myUserId={myUserId}
+              posts={posts}
+              setPosts={setPosts}
+            />
             {/* {token ? (
               <>
                 <Edit />

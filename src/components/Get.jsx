@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { baseURL } from "../api";
 
-const Get = ({ token, myUserId, posts }) => {
+const Get = ({ token, myUserId, posts, setPosts }) => {
   const [content, setContent] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState(posts)
+  const [searchResults, setSearchResults] = useState(posts);
 
   // const fetchPosts = async () => {
   //   const response = await fetch(`${baseURL}/posts`, {
@@ -23,6 +23,12 @@ const Get = ({ token, myUserId, posts }) => {
   //   fetchPosts();
   // }, []);
 
+  // deleteClick not finished
+  const deleteClick = async (id) => {
+    await deletePost(id);
+    setPosts(...posts);
+  };
+
   const deletePost = async (id) => {
     const response = await fetch(`${baseURL}/posts/${id}`, {
       method: "DELETE",
@@ -31,10 +37,11 @@ const Get = ({ token, myUserId, posts }) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    fetchPosts();
-    // const result = await response.json();
-    // console.log(response);
-    // console.log("Result: ", result);
+
+    // doesn't render automatically yet
+    const result = await response.json();
+    console.log("Result: ", result);
+    return result;
   };
 
   const addMessage = async (id, content) => {
@@ -78,6 +85,8 @@ const Get = ({ token, myUserId, posts }) => {
     // );
   };
 
+  console.log(posts);
+
   return (
     <div>
       <form
@@ -97,7 +106,7 @@ const Get = ({ token, myUserId, posts }) => {
         <button type="submit">Search</button>
       </form>
 
-      <h1>Testing Search:</h1>
+      {/* <h1>Testing Search:</h1>
       {searchResults.map((post) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
@@ -107,20 +116,19 @@ const Get = ({ token, myUserId, posts }) => {
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
         </div>
-      ))}
+      ))} */}
 
       {/* comment */}
       <h1>Hello from get</h1>
       {posts.map((post) => (
         <div key={post._id}>
-          <h4>{post.author.username}</h4>
           <h3>{post.title}</h3>
           <div>{post.description}</div>
           <div>Price: {post.price}</div>
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
 
-          {myUserId === post.author._id ? (
+          {/* {myUserId === post.author._id ? (
             <button onClick={() => deletePost(post._id)}>Delete</button>
           ) : (
             <form
@@ -141,11 +149,10 @@ const Get = ({ token, myUserId, posts }) => {
               ></input>
               <button type="submit">Message</button>
             </form>
-          )}
+          )} */}
         </div>
       ))}
       {/* comment */}
-
     </div>
   );
 };
