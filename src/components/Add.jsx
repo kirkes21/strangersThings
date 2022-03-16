@@ -1,46 +1,40 @@
 import React, { useState } from "react";
-import { baseURL } from "../api";
+import {useHistory} from "react-router-dom"
+import { baseURL, addPost } from "../api";
 
-const Add = ({ token }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [location, setLocation] = useState("");
-  const [willDeliver, setWillDeliver] = useState(false);
-
-  const addPost = async () => {
-    const response = await fetch(`${baseURL}/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        post: {
-          title,
-          description,
-          price,
-          location,
-          willDeliver,
-        },
-      }),
-    });
-    const data = await response.json();
-    console.log(data);
-
-    setTitle("");
-    setDescription("");
-    setPrice("");
-    setLocation("");
-    setWillDeliver(false);
-
-    if (document.querySelector('#willDeliver:checked')) {
-      const checkBox = document.querySelector('#willDeliver')
-      checkBox.checked = false
+const Add = ({ token, posts, setPosts }) => {
+  const [formState, setFormState] = useState(
+    { title: "",
+      description: "",
+      price: "",
+      location: "",
+      willDeliver: false,
     }
+  )
+  console.log("posts from inside add", posts)
+  const history = useHistory()
+  // const addPost = async () => {
+  //   const response = await fetch(`${baseURL}/posts`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: JSON.stringify({
+  //       post: {
+  //         title,
+  //         description,
+  //         price,
+  //         location,
+  //         willDeliver,
+  //       },
+  //     }),
+  //   });
+    // const data = await response.json();
+    // console.log(data);
 
-    return data;
-  };
+    
+
 
   return (
     <>
@@ -48,7 +42,10 @@ const Add = ({ token }) => {
       <form
         onSubmit={async (event) => {
           event.preventDefault();
-          const result = await addPost();
+          const result = await addPost(formState);
+          setPosts([...posts, result])
+          history.push("/")
+          
           console.log(result);
         }}
       >
@@ -56,13 +53,13 @@ const Add = ({ token }) => {
           type="text"
           placeholder="Title"
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(event) => setFormState({...formState, title: event.target.value})}
         ></input>
         <input
           type="text"
           placeholder="Description"
           value={description}
-          onChange={(event) => setDescription(event.target.value)}
+          onChange={(event) => setFormState({...formState, description: event.target.value})}
         ></input>
         <input
           type="text"
@@ -84,6 +81,7 @@ const Add = ({ token }) => {
         ></input>
         <label htmlFor="willDeliver">Will Deliver</label>
         <button type="submit">Post</button>
+        {/* <button type="clear">Clear Form</button> */}
       </form>
     </>
   );

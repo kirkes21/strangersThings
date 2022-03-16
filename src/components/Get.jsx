@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { baseURL } from "../api";
 
-const Get = ({ token, myUserId }) => {
-  const [posts, setPosts] = useState([]);
+const Get = ({ token, myUserId, posts }) => {
   const [content, setContent] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  let searchResults = [];
+  const [searchResults, setSearchResults] = useState(posts)
 
-  const fetchPosts = async () => {
-    const response = await fetch(`${baseURL}/posts`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    setPosts(data.data.posts);
-    console.log(data.data.posts);
-  };
+  // const fetchPosts = async () => {
+  //   const response = await fetch(`${baseURL}/posts`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   const data = await response.json();
+  //   setPosts(data.data.posts);
+  //   console.log(data.data.posts);
+  // };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   const deletePost = async (id) => {
     const response = await fetch(`${baseURL}/posts/${id}`, {
@@ -59,12 +58,15 @@ const Get = ({ token, myUserId }) => {
   };
 
   const filterPosts = (posts, searchTerm) => {
+    const searchFilter = [];
+
     posts.forEach((post) => {
       if (post.description.includes(searchTerm)) {
-        searchResults.push(post);
+        searchFilter.push(post);
       }
     });
     console.log(searchResults);
+    setSearchResults(searchFilter);
     // posts.filter(function (name) {
     //   return name.match(searchTerm);
     // });
@@ -90,11 +92,12 @@ const Get = ({ token, myUserId }) => {
           onChange={(event) => {
             setSearchTerm(event.target.value);
           }}
-          required
+          // required
         ></input>
         <button type="submit">Search</button>
       </form>
-      <h2>Testing Search:</h2>
+
+      <h1>Testing Search:</h1>
       {searchResults.map((post) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
@@ -105,6 +108,8 @@ const Get = ({ token, myUserId }) => {
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
         </div>
       ))}
+
+      {/* comment */}
       <h1>Hello from get</h1>
       {posts.map((post) => (
         <div key={post._id}>
@@ -139,6 +144,8 @@ const Get = ({ token, myUserId }) => {
           )}
         </div>
       ))}
+      {/* comment */}
+
     </div>
   );
 };

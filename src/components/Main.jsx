@@ -6,12 +6,21 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { myUserInfo } from "../api";
+import { myUserInfo, fetchPosts } from "../api";
 
 const Main = () => {
   const [token, setToken] = useState("");
   const [myUserId, setMyUserId] = useState("");
   const [myMessages, setMyMessages] = useState([]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const displayPosts = async () => {
+      const newData = await fetchPosts(token);
+      setPosts(newData)
+    }
+    displayPosts()
+  }, []);
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token");
@@ -25,7 +34,7 @@ const Main = () => {
     const getMyUserFunction = async () => {
       if (token) {
         const result = await myUserInfo(token);
-        console.log(result);
+        // console.log(result);
         setMyUserId(result.data._id);
         setMyMessages(result.data.messages);
       }
@@ -42,7 +51,7 @@ const Main = () => {
             <SignUp setToken={setToken} token={token} />
           </Route>
           <Route path="/add">
-            <Add token={token} />
+            <Add token={token} setPosts={setPosts} posts={posts} />
           </Route>
           <Route path="/login">
             <Login setToken={setToken} token={token} />
@@ -56,7 +65,7 @@ const Main = () => {
             />
           </Route>
           <Route path="/">
-            <Get token={token} myUserId={myUserId} />
+            <Get token={token} myUserId={myUserId} posts={posts} />
             {/* {token ? (
               <>
                 <Edit />

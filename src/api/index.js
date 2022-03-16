@@ -47,3 +47,37 @@ export const myUserInfo = async (token) => {
   const data = await response.json();
   return data;
 };
+
+export const fetchPosts = async (token) => {
+  const response = await fetch(`${baseURL}/posts`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  console.log(await data.data.posts)
+  return data.data.posts
+};
+
+export const addPost = async () => {
+  const response = await fetch(`${baseURL}/posts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      post: {
+        title,
+        description,
+        price,
+        location,
+        willDeliver,
+      },
+    }),
+  });
+  const result = await response.json()
+  return result
+}
