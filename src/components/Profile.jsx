@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Profile = ({ token, setToken, myMessages }) => {
+const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
   const handleLogOut = () => {
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
@@ -13,13 +13,39 @@ const Profile = ({ token, setToken, myMessages }) => {
     // console.log("after clear", localStorage);
   };
 
+  const fetchMessages = async () => {
+    const response = await fetch(`${baseURL}/posts/${id}/messages`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        message: {
+          content,
+        },
+      }),
+    });
+    const data = await response.json();
+    console.log("Fetch msgs: ", data);
+    setMyMessages(data);
+    return data;
+  };
+
+  useEffect(() => {
+    const getMessages = async () => {
+      await fetchMessages();
+    };
+    getMessages();
+  }, [myMessages.length]);
+
   return (
     <>
       <div>
         <div>Your Messages</div>
         {myMessages.length ? (
           myMessages.map((myMessage, idx) => (
-            <div key={myMessage._id}>{myMessage}</div>
+            <div key={myMessage._id}>{myMessage.content}</div>
           ))
         ) : (
           <div>No messages</div>

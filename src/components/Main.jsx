@@ -11,7 +11,7 @@ import { myUserInfo } from "../api";
 const Main = () => {
   const [token, setToken] = useState("");
   const [myUserId, setMyUserId] = useState("");
-  const [myMessages, setMyMessages] = useState([])
+  const [myMessages, setMyMessages] = useState([]);
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token");
@@ -22,16 +22,16 @@ const Main = () => {
   }, [token]);
 
   useEffect(() => {
-    const getMyUserFunction = async() => {
+    const getMyUserFunction = async () => {
       if (token) {
-        const result = await myUserInfo(token)
-    console.log(result)
-    setMyUserId(result.data._id)
-    setMyMessages(result.data.messages)
-    }}
-    getMyUserFunction()
-
-  }, [token])
+        const result = await myUserInfo(token);
+        console.log(result);
+        setMyUserId(result.data._id);
+        setMyMessages(result.data.messages);
+      }
+    };
+    getMyUserFunction();
+  }, [token]);
 
   return (
     <Router>
@@ -48,7 +48,12 @@ const Main = () => {
             <Login setToken={setToken} token={token} />
           </Route>
           <Route path="/profile">
-            <Profile setToken={setToken} token={token} myMessages={myMessages}/>
+            <Profile
+              setToken={setToken}
+              token={token}
+              myMessages={myMessages}
+              setMyMessages={setMyMessages}
+            />
           </Route>
           <Route path="/">
             <Get token={token} myUserId={myUserId} />

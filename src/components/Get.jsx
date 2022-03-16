@@ -4,6 +4,8 @@ import { baseURL } from "../api";
 const Get = ({ token, myUserId }) => {
   const [posts, setPosts] = useState([]);
   const [content, setContent] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  let searchResults = [];
 
   const fetchPosts = async () => {
     const response = await fetch(`${baseURL}/posts`, {
@@ -56,8 +58,53 @@ const Get = ({ token, myUserId }) => {
     // return result;
   };
 
+  const filterPosts = (posts, searchTerm) => {
+    posts.forEach((post) => {
+      if (post.description.includes(searchTerm)) {
+        searchResults.push(post);
+      }
+    });
+    console.log(searchResults);
+    // posts.filter(function (name) {
+    //   return name.match(searchTerm);
+    // });
+
+    // const searchResults = posts.filter(
+    //   posts.map((post) => {
+    //     post.title.includes(searchTerm);
+    //   })
+    // );
+  };
+
   return (
     <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          filterPosts(posts, searchTerm);
+        }}
+      >
+        <input
+          placeholder="Search posts..."
+          value={searchTerm}
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+          required
+        ></input>
+        <button type="submit">Search</button>
+      </form>
+      <h2>Testing Search:</h2>
+      {searchResults.map((post) => (
+        <div key={post._id}>
+          <h4>{post.author.username}</h4>
+          <h3>{post.title}</h3>
+          <div>{post.description}</div>
+          <div>Price: {post.price}</div>
+          <div>Location: {post.location}</div>
+          <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
+        </div>
+      ))}
       <h1>Hello from get</h1>
       {posts.map((post) => (
         <div key={post._id}>
