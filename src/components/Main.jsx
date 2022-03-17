@@ -23,7 +23,6 @@ const Main = () => {
       setPosts(data);
     };
     displayPosts();
-    console.log("api fetch request", posts);
   }, []);
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const Main = () => {
     const getMyUserFunction = async () => {
       if (token) {
         const result = await myUserInfo(token);
-        console.log(result);
         setMyUser({
           messages: result.data.messages,
           username: result.data.username,

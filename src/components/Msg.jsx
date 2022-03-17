@@ -12,10 +12,6 @@ const Msg = ({ token, post, idx, setAddMsg, addMsg }) => {
         e.preventDefault();
         const result = await addMessage(token, post._id, content);
         setContent("");
-
-        console.log(result);
-        // setMyUser({ ...myUser, messages: [...messages, content] });
-        // console.log(myUser.messages);
       }}
     >
       <input
@@ -28,7 +24,11 @@ const Msg = ({ token, post, idx, setAddMsg, addMsg }) => {
         required
       ></input>
       <button type="submit">Message</button>
-      <button onClick={() => setAddMsg({ ...addMsg, makeMsg: false })}>
+      <button onClick={(e) => {
+        e.preventDefault();
+        setAddMsg({ ...addMsg, makeMsg: false })
+      }}
+      >
         Clear
       </button>
     </form>

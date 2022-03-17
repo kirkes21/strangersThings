@@ -43,9 +43,9 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
 
   const handleMsgBtn = (e) => {
     if (addMsg.idx !== e.target.id) {
-      setAddMsg({ ...addMsg, idx: e.target.id });
-      console.log("state handleMsg: ", addMsg);
-      console.log("button: ", e.target.id);
+      setAddMsg({ makeMsg: true, idx: e.target.id });
+      // console.log("state handleMsg: ", addMsg);
+      // console.log("button: ", e.target.id);
     }
   };
 
@@ -83,8 +83,7 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
 
           {!myUser._id ? null : myUser._id === post.author._id ? (
             <button onClick={() => deleteClick(post._id, token)}>Delete</button>
-          ) : null}
-          {addMsg.makeMsg ? (
+          ) : addMsg.makeMsg ? (
             idx == addMsg.idx ? (
               <Msg post={post} idx={idx} setAddMsg={setAddMsg} token={token} />
             ) : (
