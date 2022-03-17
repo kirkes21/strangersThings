@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { baseURL, addMessage, deletePost } from "../api";
+import { deletePost } from "../api";
 import Msg from "./Msg";
 
 const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
@@ -44,8 +44,6 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
   const handleMsgBtn = (e) => {
     if (addMsg.idx !== e.target.id) {
       setAddMsg({ makeMsg: true, idx: e.target.id });
-      // console.log("state handleMsg: ", addMsg);
-      // console.log("button: ", e.target.id);
     }
   };
 

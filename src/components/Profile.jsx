@@ -1,17 +1,11 @@
 import React from "react";
-// import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react/cjs/react.production.min";
 
-const Profile = ({ token, setToken, myUser, setMyUser }) => {
+const Profile = ({ setToken, myUser, setMyUser }) => {
   const handleLogOut = () => {
-
     setToken("");
     localStorage.clear();
     setMyUser({ messages: [], username: "", _id: "" });
-
-    // console.log("after clear", token);
-    // console.log("after clear", localStorage);
   };
 
   const history = useHistory();

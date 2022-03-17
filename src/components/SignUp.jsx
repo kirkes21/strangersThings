@@ -18,13 +18,8 @@ const SignUp = ({setToken, token}) => {
 
           const result = await registerUser(username, password);
 
-          // console.log(result.error)
-          
           localStorage.setItem("token", result.data.token);
           setToken(result.data.token)
-          
-          // console.log(localStorage)
-          // console.log(token)
 
           history.push("/")
         }}
@@ -37,6 +32,7 @@ const SignUp = ({setToken, token}) => {
             setUsername(e.target.value);
           }}
           required
+          minlength = "8"
         />
         <input
           value={password}
@@ -46,6 +42,7 @@ const SignUp = ({setToken, token}) => {
             setPassword(e.target.value);
           }}
           required
+          minlength = "8"
         />
         <button type="submit">Sign Up</button>
       </form>

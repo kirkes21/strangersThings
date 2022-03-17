@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { addMessage, myUserInfo } from "../api";
+import { addMessage } from "../api";
 
 const Msg = ({ token, post, idx, setAddMsg, addMsg, setMyUser, myUser }) => {
   const [content, setContent] = useState("");

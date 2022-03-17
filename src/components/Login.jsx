@@ -15,15 +15,9 @@ const Login = ({ setToken, token }) => {
           event.preventDefault();
 
           const result = await loginUser(username, password);
-
-          // console.log("before set storage", localStorage)
-          // console.log("before set", token);
           
           localStorage.setItem("token", result.data.token);
           setToken(result.data.token)
-          
-          // console.log("after set storage", localStorage)
-          // console.log("after set", token)
 
           history.push("/");
         }}
