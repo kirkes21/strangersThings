@@ -1,0 +1,21 @@
+* {
+}
+
+body {
+  background-color: black;
+  color: white;
+  margin: 2rem;
+}
+
+.postCard {
+  border: lightblue 2px solid;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+  width: 20rem;
+}
+
+#postList {
+  display: flex;
+  flex-wrap: wrap;
+}

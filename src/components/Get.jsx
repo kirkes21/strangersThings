@@ -68,41 +68,44 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
         ></input>
         <button type="submit">Search</button>
       </form>
-
       {myUser.username ? <h1>Welcome, {myUser.username}</h1> : null}
-      {searchResults.map((post, idx) => (
-        <div key={post._id}>
-          <h4>{post.author.username}</h4>
-          <h3>{post.title}</h3>
-          <div>{post.description}</div>
-          <div>Price: {post.price}</div>
-          <div>Location: {post.location}</div>
-          <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
+      <div id="postList">
+        {searchResults.map((post, idx) => (
+          <div class="postCard" key={post._id}>
+            <h4>{post.author.username}</h4>
+            <h3>{post.title}</h3>
+            <div>{post.description}</div>
+            <div>Price: {post.price}</div>
+            <div>Location: {post.location}</div>
+            <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
 
-          {!myUser._id ? null : myUser._id === post.author._id ? (
-            <button onClick={() => deleteClick(post._id, token)}>Delete</button>
-          ) : addMsg.makeMsg ? (
-            idx == addMsg.idx ? (
-              <Msg
-                post={post}
-                idx={idx}
-                setAddMsg={setAddMsg}
-                token={token}
-                setMyUser={setMyUser}
-                myUser={myUser}
-              />
+            {!myUser._id ? null : myUser._id === post.author._id ? (
+              <button onClick={() => deleteClick(post._id, token)}>
+                Delete
+              </button>
+            ) : addMsg.makeMsg ? (
+              idx == addMsg.idx ? (
+                <Msg
+                  post={post}
+                  idx={idx}
+                  setAddMsg={setAddMsg}
+                  token={token}
+                  setMyUser={setMyUser}
+                  myUser={myUser}
+                />
+              ) : (
+                <button id={idx} onClick={handleMsgBtn}>
+                  Send Message
+                </button>
+              )
             ) : (
               <button id={idx} onClick={handleMsgBtn}>
                 Send Message
               </button>
-            )
-          ) : (
-            <button id={idx} onClick={handleMsgBtn}>
-              Send Message
-            </button>
-          )}
-        </div>
-      ))}
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
