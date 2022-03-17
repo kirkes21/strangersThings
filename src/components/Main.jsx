@@ -11,10 +11,10 @@ import { myUserInfo, fetchPosts } from "../api";
 const Main = () => {
   const [token, setToken] = useState("");
   const [myUser, setMyUser] = useState({
-    username: '',
-  })
-  const [myUserId, setMyUserId] = useState("");
-  const [myMessages, setMyMessages] = useState([]);
+    messages: [],
+    username: "",
+    _id: "",
+  });
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Main = () => {
       setPosts(data);
     };
     displayPosts();
-    console.log("api fetch request", posts)
+    console.log("api fetch request", posts);
   }, []);
 
   useEffect(() => {
@@ -39,9 +39,11 @@ const Main = () => {
       if (token) {
         const result = await myUserInfo(token);
         console.log(result);
-        setMyUser({...myUser, username: result.data.username})
-        setMyUserId(result.data._id);
-        setMyMessages(result.data.messages);
+        setMyUser({
+          messages: result.data.messages,
+          username: result.data.username,
+          _id: result.data._id,
+        });
       }
     };
     getMyUserFunction();
@@ -65,14 +67,13 @@ const Main = () => {
             <Profile
               setToken={setToken}
               token={token}
-              myMessages={myMessages}
-              setMyMessages={setMyMessages}
+              myUser={myUser}
+              setMyUser={setMyUser}
             />
           </Route>
           <Route path="/">
             <Get
               token={token}
-              myUserId={myUserId}
               posts={posts}
               setPosts={setPosts}
               myUser={myUser}

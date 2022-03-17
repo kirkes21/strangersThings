@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { baseURL } from "../api";
 
-const Get = ({ token, myUserId, posts, setPosts, myUser }) => {
+const Get = ({ token, posts, setPosts, myUser }) => {
   const [content, setContent] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(posts);
@@ -96,7 +96,7 @@ const Get = ({ token, myUserId, posts, setPosts, myUser }) => {
         <button type="submit">Search</button>
       </form>
 
-      <h1>Welcome, {myUser.username}</h1>
+      {myUser.username ? <h1>Welcome, {myUser.username}</h1>: null}
       {searchResults.map((post) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
@@ -106,7 +106,7 @@ const Get = ({ token, myUserId, posts, setPosts, myUser }) => {
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
 
-          {myUserId === post.author._id ? (
+          {!myUser._id ? null: myUser._id === true && myUser._id === post.author._id ? (
             <button onClick={() => deleteClick(post._id, token)}>Delete</button>
           ) : (
             <form

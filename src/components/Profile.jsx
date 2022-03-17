@@ -2,13 +2,19 @@ import React from "react";
 // import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
+const Profile = ({
+  token,
+  setToken,
+  myUser,
+  setMyUser,
+}) => {
   const handleLogOut = () => {
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
 
     setToken("");
     localStorage.clear();
+    setMyUser({ messages: [], username: "", _id: "" });
 
     // console.log("after clear", token);
     // console.log("after clear", localStorage);
@@ -46,9 +52,9 @@ const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
     <>
       <div>
         <div>Your Messages</div>
-        {myMessages.length ? (
-          myMessages.map((myMessage, idx) => (
-            <div key={myMessage._id}>{myMessage.content}</div>
+        {myUser.messages.length ? (
+          myUser.messages.map((message, idx) => (
+            <div key={message._id}>{message.content}</div>
           ))
         ) : (
           <div>No messages</div>
