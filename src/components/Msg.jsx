@@ -13,7 +13,7 @@ const Msg = ({ post, idx }) => {
         const result = await addMessage(token, post._id, content);
         setContent("");
 
-        // console.log(result);
+        console.log(result);
         // setMyUser({ ...myUser, messages: [...messages, content] });
         // console.log(myUser.messages);
       }}

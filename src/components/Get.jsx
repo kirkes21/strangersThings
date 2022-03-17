@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { baseURL, addMessage, deletePost } from "../api";
+import Msg from "./Msg";
 
 const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(posts);
+  const [addMsg, setAddMsg] = useState({
+    makeMsg: true,
+    idx: -1,
+  });
 
   const filterPosts = (posts, searchTerm) => {
     const searchFilter = [];
@@ -34,6 +39,14 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
     });
 
     setPosts(newPosts);
+  };
+
+  const handleMsgBtn = (e) => {
+    if (addMsg.idx !== e.target.id) {
+      setAddMsg({ ...addMsg, idx: e.target.id });
+      console.log("state handleMsg: ", addMsg);
+      console.log("button: ", e.target.id);
+    }
   };
 
   useEffect(() => {
@@ -68,38 +81,22 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
 
-          {
-            !myUser._id ? null : myUser._id === post.author._id ? (
-              <button onClick={() => deleteClick(post._id, token)}>
-                Delete
-              </button>
+          {!myUser._id ? null : myUser._id === post.author._id ? (
+            <button onClick={() => deleteClick(post._id, token)}>Delete</button>
+          ) : null}
+          {addMsg.makeMsg ? (
+            idx == addMsg.idx ? (
+              <Msg post={post} idx={idx} setAddMsg={setAddMsg} />
             ) : (
-              <Msg post={post} idx={idx} />
+              <button id={idx} onClick={handleMsgBtn}>
+                Send Message
+              </button>
             )
-            // <form
-            //   key={post._id}
-            //   onSubmit={async (e) => {
-            //     e.preventDefault();
-            //     const result = await addMessage(token, post._id, content);
-            //     setContent("");
-
-            //     // console.log(result);
-            //     // setMyUser({ ...myUser, messages: [...messages, content] });
-            //     // console.log(myUser.messages);
-            //   }}
-            // >
-            //   <input
-            //     placeholder="Your message here"
-            //     key={`message: ${idx}`}
-            //     value={content}
-            //     onChange={(event) => {
-            //       setContent(event.target.value);
-            //     }}
-            //     required
-            //   ></input>
-            //   <button type="submit">Message</button>
-            // </form>
-          }
+          ) : (
+            <button id={idx} onClick={handleMsgBtn}>
+              Send Message
+            </button>
+          )}
         </div>
       ))}
     </div>
