@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { loginUser } from "../api";
+import { useHistory } from "react-router-dom";
 
 const Login = ({ setToken, token }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
 
   return (
     <div>
@@ -18,9 +21,11 @@ const Login = ({ setToken, token }) => {
           
           localStorage.setItem("token", result.data.token);
           setToken(result.data.token)
+          
+          // console.log("after set storage", localStorage)
+          // console.log("after set", token)
 
-          console.log("after set storage", localStorage)
-          console.log("after set", token)
+          history.push("/");
         }}
       >
         <input

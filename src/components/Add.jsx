@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import { addPost } from "../api";
 import { useHistory } from "react-router-dom";
-import { baseURL, addPost } from "../api";
 
 const Add = ({ token, posts, setPosts }) => {
   const [formState, setFormState] = useState({
@@ -10,26 +10,9 @@ const Add = ({ token, posts, setPosts }) => {
     location: "",
     willDeliver: false,
   });
+
   const history = useHistory();
-  // const addPost = async () => {
-  //   const response = await fetch(`${baseURL}/posts`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     body: JSON.stringify({
-  //       post: {
-  //         title,
-  //         description,
-  //         price,
-  //         location,
-  //         willDeliver,
-  //       },
-  //     }),
-  //   });
-  // const data = await response.json();
-  // console.log(data);
+
 
   return (
     <>
@@ -38,7 +21,7 @@ const Add = ({ token, posts, setPosts }) => {
         onSubmit={async (event) => {
           event.preventDefault();
           const result = await addPost(token, formState);
-          setPosts([...posts, result]);
+          setPosts([...posts, result.data.post]);
           history.push("/");
 
           console.log(result);
@@ -89,7 +72,6 @@ const Add = ({ token, posts, setPosts }) => {
         ></input>
         <label htmlFor="willDeliver">Will Deliver</label>
         <button type="submit">Post</button>
-        {/* <button type="clear">Clear Form</button> */}
       </form>
     </>
   );

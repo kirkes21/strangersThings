@@ -1,48 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { baseURL } from "../api";
 
-const Get = ({ token, myUserId, posts, setPosts }) => {
+const Get = ({ token, myUserId, posts, setPosts, myUser }) => {
   const [content, setContent] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(posts);
-
-  // const fetchPosts = async () => {
-  //   const response = await fetch(`${baseURL}/posts`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //   const data = await response.json();
-  //   setPosts(data.data.posts);
-  //   console.log(data.data.posts);
-  // };
-
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
-
-  // deleteClick not finished
-  const deleteClick = async (id) => {
-    await deletePost(id);
-    setPosts(...posts);
-  };
-
-  const deletePost = async (id) => {
-    const response = await fetch(`${baseURL}/posts/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    // doesn't render automatically yet
-    const result = await response.json();
-    console.log("Result: ", result);
-    return result;
-  };
 
   const addMessage = async (id, content) => {
     const response = await fetch(`${baseURL}/posts/${id}/messages`, {
@@ -68,24 +30,53 @@ const Get = ({ token, myUserId, posts, setPosts }) => {
     const searchFilter = [];
 
     posts.forEach((post) => {
-      if (post.description.includes(searchTerm)) {
+      if (
+        post.author.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.price.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.location.toLowerCase().includes(searchTerm.toLowerCase())
+      ) {
         searchFilter.push(post);
       }
     });
-    console.log(searchResults);
     setSearchResults(searchFilter);
-    // posts.filter(function (name) {
-    //   return name.match(searchTerm);
-    // });
-
-    // const searchResults = posts.filter(
-    //   posts.map((post) => {
-    //     post.title.includes(searchTerm);
-    //   })
-    // );
   };
 
-  console.log(posts);
+  const deletePost = async (deleteId) => {
+    const response = await fetch(`${baseURL}/posts/${deleteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  };
+
+  const deleteClick = async (deleteId, token) => {
+    const result = await deletePost(deleteId, token);
+    console.log(result);
+    // setPosts(...posts);
+    console.log("posts before filter", posts);
+
+    // const deleteFilter = [];
+
+    // posts.forEach((post) => {
+    //   if (post._id !== deleteId) {
+    //     deleteFilter.push(post);
+    //   }
+    // });
+    // setPosts(deleteFilter)
+
+    // setPosts(posts.filter(post => post._id !== deleteId));
+
+    console.log("posts after filter", posts);
+    // filterPosts(posts, searchTerm);
+  };
+
+  // console.log("current search results", searchResults);
 
   return (
     <div>
@@ -101,12 +92,11 @@ const Get = ({ token, myUserId, posts, setPosts }) => {
           onChange={(event) => {
             setSearchTerm(event.target.value);
           }}
-          // required
         ></input>
         <button type="submit">Search</button>
       </form>
 
-      {/* <h1>Testing Search:</h1>
+      <h1>Welcome, {myUser.username}</h1>
       {searchResults.map((post) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
@@ -115,21 +105,9 @@ const Get = ({ token, myUserId, posts, setPosts }) => {
           <div>Price: {post.price}</div>
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
-        </div>
-      ))} */}
 
-      {/* comment */}
-      <h1>Hello from get</h1>
-      {posts.map((post) => (
-        <div key={post._id}>
-          <h3>{post.title}</h3>
-          <div>{post.description}</div>
-          <div>Price: {post.price}</div>
-          <div>Location: {post.location}</div>
-          <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
-
-          {/* {myUserId === post.author._id ? (
-            <button onClick={() => deletePost(post._id)}>Delete</button>
+          {myUserId === post.author._id ? (
+            <button onClick={() => deleteClick(post._id, token)}>Delete</button>
           ) : (
             <form
               key={post._id}
@@ -149,10 +127,9 @@ const Get = ({ token, myUserId, posts, setPosts }) => {
               ></input>
               <button type="submit">Message</button>
             </form>
-          )} */}
+          )}
         </div>
       ))}
-      {/* comment */}
     </div>
   );
 };

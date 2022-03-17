@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
   const handleLogOut = () => {
@@ -13,31 +14,33 @@ const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
     // console.log("after clear", localStorage);
   };
 
-  const fetchMessages = async () => {
-    const response = await fetch(`${baseURL}/posts/${id}/messages`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        message: {
-          content,
-        },
-      }),
-    });
-    const data = await response.json();
-    console.log("Fetch msgs: ", data);
-    setMyMessages(data);
-    return data;
-  };
+  const history = useHistory();
 
-  useEffect(() => {
-    const getMessages = async () => {
-      await fetchMessages();
-    };
-    getMessages();
-  }, [myMessages.length]);
+  // const fetchMessages = async () => {
+  //   const response = await fetch(`${baseURL}/posts/${id}/messages`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: JSON.stringify({
+  //       message: {
+  //         content,
+  //       },
+  //     }),
+  //   });
+  //   const data = await response.json();
+  //   console.log("Fetch msgs: ", data);
+  //   setMyMessages(data);
+  //   return data;
+  // };
+
+  // useEffect(() => {
+  //   const getMessages = async () => {
+  //     await fetchMessages();
+  //   };
+  //   getMessages();
+  // }, [myMessages.length]);
 
   return (
     <>
@@ -51,12 +54,12 @@ const Profile = ({ token, setToken, myMessages, setMyMessages }) => {
           <div>No messages</div>
         )}
       </div>
-      {/* ^^^Does it work?^^^ */}
 
       <form
         onSubmit={async (e) => {
           e.preventDefault();
           handleLogOut();
+          history.push("/");
         }}
       >
         <button type="submit">Log Out</button>

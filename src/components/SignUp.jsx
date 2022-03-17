@@ -1,10 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { registerUser } from "../api";
+import { useHistory } from "react-router-dom";
+
 
 const SignUp = ({setToken, token}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
 
   return (
     <div>
@@ -14,11 +18,15 @@ const SignUp = ({setToken, token}) => {
 
           const result = await registerUser(username, password);
 
+          // console.log(result.error)
+          
           localStorage.setItem("token", result.data.token);
           setToken(result.data.token)
           
-          console.log(localStorage)
-          console.log(token)
+          // console.log(localStorage)
+          // console.log(token)
+
+          history.push("/")
         }}
       >
         <input

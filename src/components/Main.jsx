@@ -10,23 +10,27 @@ import { myUserInfo, fetchPosts } from "../api";
 
 const Main = () => {
   const [token, setToken] = useState("");
+  const [myUser, setMyUser] = useState({
+    username: '',
+  })
   const [myUserId, setMyUserId] = useState("");
   const [myMessages, setMyMessages] = useState([]);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const displayPosts = async () => {
-      const newData = await fetchPosts(token);
-      setPosts(newData);
+      const data = await fetchPosts(token);
+      setPosts(data);
     };
     displayPosts();
+    console.log("api fetch request", posts)
   }, []);
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token");
     if (localStorageToken) {
       setToken(localStorageToken);
-      console.log("currentToken", token);
+      console.log("currentToken from localStorage", token);
     }
   }, [token]);
 
@@ -34,7 +38,8 @@ const Main = () => {
     const getMyUserFunction = async () => {
       if (token) {
         const result = await myUserInfo(token);
-        // console.log(result);
+        console.log(result);
+        setMyUser({...myUser, username: result.data.username})
         setMyUserId(result.data._id);
         setMyMessages(result.data.messages);
       }
@@ -70,6 +75,7 @@ const Main = () => {
               myUserId={myUserId}
               posts={posts}
               setPosts={setPosts}
+              myUser={myUser}
             />
             {/* {token ? (
               <>
