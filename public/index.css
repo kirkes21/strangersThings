@@ -1,10 +1,27 @@
-* {
-}
-
 body {
   background-color: black;
   color: white;
-  margin: 2rem;
+  /* margin: 2rem; */
+}
+
+#navBar {
+    background-color: rgb(35, 114, 128);
+    /* width: 100vw; */
+    top: 0;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.nav_item {
+    margin-right: 5rem;
+    margin-left: 5rem;
+    color: white;
+    font-size: x-large
+}
+
+#postList {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .postCard {
@@ -15,7 +32,8 @@ body {
   width: 20rem;
 }
 
-#postList {
-  display: flex;
-  flex-wrap: wrap;
+#searchBar {
+    margin: 5rem;
+    width: 80vw;
 }
+

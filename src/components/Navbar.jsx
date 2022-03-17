@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ token }) => {
   return (
-    <div className="nav_bar_container">
+    <div id="navBar" className="nav_bar_container">
       <div className="link_container">
-        <div>
+        <div  >
           <Link to={"/"} className="nav_item">
             Home
           </Link>

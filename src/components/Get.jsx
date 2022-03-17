@@ -54,6 +54,7 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
   return (
     <div>
       <form
+        id="searchBar"
         onSubmit={(e) => {
           e.preventDefault();
           filterPosts(posts, searchTerm);
@@ -71,7 +72,7 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
       {myUser.username ? <h1>Welcome, {myUser.username}</h1> : null}
       <div id="postList">
         {searchResults.map((post, idx) => (
-          <div class="postCard" key={post._id}>
+          <div className="postCard" key={post._id}>
             <h4>{post.author.username}</h4>
             <h3>{post.title}</h3>
             <div>{post.description}</div>
