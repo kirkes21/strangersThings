@@ -81,3 +81,34 @@ export const addPost = async (token, formState) => {
   const result = await response.json()
   return result
 }
+
+export const addMessage = async (token, id, content) => {
+  const response = await fetch(`${baseURL}/posts/${id}/messages`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      message: {
+        content,
+      },
+    }),
+  });
+
+  const result = await response.json();
+  console.log(result);
+  // return result;
+};
+
+export const deletePost = async (token, deleteId) => {
+  const response = await fetch(`${baseURL}/posts/${deleteId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await response.json();
+  return result;
+};

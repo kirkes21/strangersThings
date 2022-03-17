@@ -1,30 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { baseURL } from "../api";
+import { baseURL, addMessage, deletePost } from "../api";
 
-const Get = ({ token, posts, setPosts, myUser }) => {
+const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
   const [content, setContent] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(posts);
-
-  const addMessage = async (id, content) => {
-    const response = await fetch(`${baseURL}/posts/${id}/messages`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        message: {
-          content,
-        },
-      }),
-    });
-    setContent("");
-
-    const result = response.json();
-    console.log(result);
-    // return result;
-  };
 
   const filterPosts = (posts, searchTerm) => {
     const searchFilter = [];
@@ -43,20 +23,8 @@ const Get = ({ token, posts, setPosts, myUser }) => {
     setSearchResults(searchFilter);
   };
 
-  const deletePost = async (deleteId) => {
-    const response = await fetch(`${baseURL}/posts/${deleteId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const result = await response.json();
-    return result;
-  };
-
   const deleteClick = async (deleteId, token) => {
-    const result = await deletePost(deleteId, token);
+    const result = await deletePost(token, deleteId);
 
     const newPosts = [];
 
@@ -92,7 +60,7 @@ const Get = ({ token, posts, setPosts, myUser }) => {
       </form>
 
       {myUser.username ? <h1>Welcome, {myUser.username}</h1> : null}
-      {searchResults.map((post) => (
+      {searchResults.map((post, idx) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
           <h3>{post.title}</h3>
@@ -108,12 +76,17 @@ const Get = ({ token, posts, setPosts, myUser }) => {
               key={post._id}
               onSubmit={async (e) => {
                 e.preventDefault();
-                const result = await addMessage(post._id, content);
-                console.log(result);
+                const result = await addMessage(token, post._id, content);
+                setContent("");
+
+                // console.log(result);
+                // setMyUser({ ...myUser, messages: [...messages, content] });
+                // console.log(myUser.messages);
               }}
             >
               <input
                 placeholder="Your message here"
+                key={`message: ${idx}`}
                 value={content}
                 onChange={(event) => {
                   setContent(event.target.value);

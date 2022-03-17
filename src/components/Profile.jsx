@@ -1,13 +1,9 @@
 import React from "react";
 // import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react/cjs/react.production.min";
 
-const Profile = ({
-  token,
-  setToken,
-  myUser,
-  setMyUser,
-}) => {
+const Profile = ({ token, setToken, myUser, setMyUser }) => {
   const handleLogOut = () => {
     // console.log("before clear", localStorage);
     // console.log("before clear", token)
@@ -22,39 +18,19 @@ const Profile = ({
 
   const history = useHistory();
 
-  // const fetchMessages = async () => {
-  //   const response = await fetch(`${baseURL}/posts/${id}/messages`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     body: JSON.stringify({
-  //       message: {
-  //         content,
-  //       },
-  //     }),
-  //   });
-  //   const data = await response.json();
-  //   console.log("Fetch msgs: ", data);
-  //   setMyMessages(data);
-  //   return data;
-  // };
-
-  // useEffect(() => {
-  //   const getMessages = async () => {
-  //     await fetchMessages();
-  //   };
-  //   getMessages();
-  // }, [myMessages.length]);
-
   return (
     <>
       <div>
         <div>Your Messages</div>
         {myUser.messages.length ? (
           myUser.messages.map((message, idx) => (
-            <div key={message._id}>{message.content}</div>
+            <>
+              <div key={message._id}>
+                <div>On post: {message.post.title}</div>
+                <div>Your message: {message.content}</div>
+                <div>Posted by: {message.fromUser.username}</div>
+              </div>
+            </>
           ))
         ) : (
           <div>No messages</div>

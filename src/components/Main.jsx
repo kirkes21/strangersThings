@@ -77,13 +77,8 @@ const Main = () => {
               posts={posts}
               setPosts={setPosts}
               myUser={myUser}
+              setMyUser={setMyUser}
             />
-            {/* {token ? (
-              <>
-                <Edit />
-                <Delete />
-              </>
-            ) : null} */}
           </Route>
         </Switch>
       </div>
