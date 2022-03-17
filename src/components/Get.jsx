@@ -57,26 +57,21 @@ const Get = ({ token, posts, setPosts, myUser }) => {
 
   const deleteClick = async (deleteId, token) => {
     const result = await deletePost(deleteId, token);
-    console.log(result);
-    // setPosts(...posts);
-    console.log("posts before filter", posts);
 
-    // const deleteFilter = [];
+    const newPosts = [];
 
-    // posts.forEach((post) => {
-    //   if (post._id !== deleteId) {
-    //     deleteFilter.push(post);
-    //   }
-    // });
-    // setPosts(deleteFilter)
+    posts.forEach((post) => {
+      if (post._id !== deleteId) {
+        newPosts.push(post);
+      }
+    });
 
-    // setPosts(posts.filter(post => post._id !== deleteId));
-
-    console.log("posts after filter", posts);
-    // filterPosts(posts, searchTerm);
+    setPosts(newPosts);
   };
 
-  // console.log("current search results", searchResults);
+  useEffect(() => {
+    filterPosts(posts, "");
+  }, [posts]);
 
   return (
     <div>
@@ -96,7 +91,7 @@ const Get = ({ token, posts, setPosts, myUser }) => {
         <button type="submit">Search</button>
       </form>
 
-      {myUser.username ? <h1>Welcome, {myUser.username}</h1>: null}
+      {myUser.username ? <h1>Welcome, {myUser.username}</h1> : null}
       {searchResults.map((post) => (
         <div key={post._id}>
           <h4>{post.author.username}</h4>
@@ -106,7 +101,7 @@ const Get = ({ token, posts, setPosts, myUser }) => {
           <div>Location: {post.location}</div>
           <div>Delivery Available: {post.willDeliver ? "Yes" : "No"}</div>
 
-          {!myUser._id ? null: myUser._id === true && myUser._id === post.author._id ? (
+          {!myUser._id ? null : myUser._id === post.author._id ? (
             <button onClick={() => deleteClick(post._id, token)}>Delete</button>
           ) : (
             <form
