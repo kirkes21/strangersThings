@@ -86,7 +86,7 @@ const Get = ({ token, posts, setPosts, myUser, setMyUser }) => {
           ) : null}
           {addMsg.makeMsg ? (
             idx == addMsg.idx ? (
-              <Msg post={post} idx={idx} setAddMsg={setAddMsg} />
+              <Msg post={post} idx={idx} setAddMsg={setAddMsg} token={token} />
             ) : (
               <button id={idx} onClick={handleMsgBtn}>
                 Send Message

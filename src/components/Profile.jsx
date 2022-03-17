@@ -24,13 +24,11 @@ const Profile = ({ token, setToken, myUser, setMyUser }) => {
         <div>Your Messages</div>
         {myUser.messages.length ? (
           myUser.messages.map((message, idx) => (
-            <>
-              <div key={message._id}>
-                <div>On post: {message.post.title}</div>
-                <div>Your message: {message.content}</div>
-                <div>Posted by: {message.fromUser.username}</div>
-              </div>
-            </>
+            <div key={`Message Board: ${idx}`}>
+              <div>On post: {message.post.title}</div>
+              <div>Your message: {message.content}</div>
+              <div>Posted by: {message.fromUser.username}</div>
+            </div>
           ))
         ) : (
           <div>No messages</div>

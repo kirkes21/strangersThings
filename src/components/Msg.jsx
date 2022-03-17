@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { addMessage } from "../api";
 
-const Msg = ({ post, idx }) => {
+const Msg = ({ token, post, idx, setAddMsg, addMsg }) => {
   const [content, setContent] = useState("");
 
   return (
@@ -28,6 +28,9 @@ const Msg = ({ post, idx }) => {
         required
       ></input>
       <button type="submit">Message</button>
+      <button onClick={() => setAddMsg({ ...addMsg, makeMsg: false })}>
+        Clear
+      </button>
     </form>
   );
 };
