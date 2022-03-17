@@ -1,9 +1,24 @@
 import React from "react";
 import { useState } from "react";
-import { addMessage } from "../api";
+import { addMessage, myUserInfo } from "../api";
 
-const Msg = ({ token, post, idx, setAddMsg, addMsg }) => {
+const Msg = ({ token, post, idx, setAddMsg, addMsg, setMyUser, myUser }) => {
   const [content, setContent] = useState("");
+
+  const updateMessageBoard = (content, post) => {
+    const makeNewObj = {
+      content,
+      post: {
+        title: post.title, 
+      },
+      fromUser: {
+        username: myUser.username,
+      }
+    }
+    const myResults = myUser.messages
+    myResults.push(makeNewObj)
+    setMyUser({...myUser, messages: myResults})
+  }
 
   return (
     <form
@@ -11,6 +26,7 @@ const Msg = ({ token, post, idx, setAddMsg, addMsg }) => {
       onSubmit={async (e) => {
         e.preventDefault();
         const result = await addMessage(token, post._id, content);
+        updateMessageBoard(content, post)
         setContent("");
       }}
     >

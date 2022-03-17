@@ -5,8 +5,6 @@ import { useEffect } from "react/cjs/react.production.min";
 
 const Profile = ({ token, setToken, myUser, setMyUser }) => {
   const handleLogOut = () => {
-    // console.log("before clear", localStorage);
-    // console.log("before clear", token)
 
     setToken("");
     localStorage.clear();
