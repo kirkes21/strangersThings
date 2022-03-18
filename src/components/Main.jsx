@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Add, Get, SignUp, Login, Profile } from "./index";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { myUserInfo, fetchPosts } from "../api";
 
 const Main = () => {
@@ -22,7 +18,7 @@ const Main = () => {
       setPosts(data);
     };
     displayPosts();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const localStorageToken = localStorage.getItem("token");

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { loginUser } from "../api";
 import { useHistory } from "react-router-dom";
 
-const Login = ({ setToken, token }) => {
+const Login = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,9 +15,9 @@ const Login = ({ setToken, token }) => {
           event.preventDefault();
 
           const result = await loginUser(username, password);
-          
+
           localStorage.setItem("token", result.data.token);
-          setToken(result.data.token)
+          setToken(result.data.token);
 
           history.push("/");
         }}
